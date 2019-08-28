@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Map from './components/Map';
+import GoogleMap from './components/GoogleMap';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
           <span className="name">Restaurant Search</span>
         </header>
       </div>
-      <Map className="map" />
+      <GoogleMap />
     </div>
   );
 }
