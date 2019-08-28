@@ -11,7 +11,7 @@ export default class GoogleMap extends Component {
 
     window.document.body.appendChild(googleMapScript);
 
-    googleMapScript.addEventListener('load', this.initMap);
+    googleMapScript.addEventListener('load', () => this.initMap());
   }
 
   initMap() {
