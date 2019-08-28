@@ -5,7 +5,6 @@ export default class Info extends React.Component {
     let ratingHtml = '';
     const place = this.props.place;
     if (!place) return null;
-    console.log(place)
     if (place.rating) {
       // Assign a five-star rating to the restaurant, using a black star ('&#10029;')
       // to indicate the rating the restaurant has earned, and a white star ('&#10025;')
