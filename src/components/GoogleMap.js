@@ -15,7 +15,7 @@ export default class GoogleMap extends Component {
   }
 
   initMap() {
-    this.googleMap = this.createGoogleMap();
+    this.map = this.createGoogleMap();
     this.searchBox = this.createSearchBox();
   }
 
@@ -31,17 +31,16 @@ export default class GoogleMap extends Component {
   }
 
   createMarker(place) {
-    if (!this.googleMap || !place) return null;
+    if (!this.map || !place) return null;
     return new window.google.maps.Marker({
       position: place.geometry.location,
-      map: this.googleMap,
+      map: this.map,
     });
   }
 
   // Create the search box and link it to the UI element.
   createSearchBox() {
     var input = document.createElement('input');
-    const map = this.googleMap;
     Object.assign(input, {
       id: "searchbox",
       placeholder: "Enter a place",
@@ -49,11 +48,11 @@ export default class GoogleMap extends Component {
       ref: this.inputRef,
     })
     var searchBox = new window.google.maps.places.SearchBox(input);
-    map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
+    this.map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
 
     // Bias the SearchBox results towards current map's viewport.
-    map.addListener('bounds_changed', () => {
-      searchBox.setBounds(map.getBounds());
+    this.map.addListener('bounds_changed', () => {
+      searchBox.setBounds(this.map.getBounds());
     });
     return searchBox;
   }
