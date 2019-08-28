@@ -67,8 +67,8 @@ export default class GoogleMap extends Component {
     return searchBox;
   }
 
-  // When the user selects a city, get the place details for the city and
-  // zoom the map in on the city.
+  // When the user selects a place, get the place details for the place and
+  // zoom the map in on the place.
   onPlaceChanged() {
     var place = this.searchBox.getPlace();
     if (place.geometry) {
