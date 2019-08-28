@@ -1,7 +1,8 @@
 import React, {Component, createRef} from 'react';
 
 export default class GoogleMap extends Component {
-  googleMapRef = createRef()
+  googleMapRef = createRef();
+  inputRef = createRef();
 
   componentDidMount() {
     const googleMapScript = document.createElement('script');
@@ -12,6 +13,7 @@ export default class GoogleMap extends Component {
 
     googleMapScript.addEventListener('load', () => {
       this.googleMap = this.createGoogleMap();
+      this.searchBox = this.createSearchBox();
     })
   }
 
@@ -32,6 +34,26 @@ export default class GoogleMap extends Component {
       position: place.geometry.location,
       map: this.googleMap,
     });
+  }
+
+  // Create the search box and link it to the UI element.
+  createSearchBox() {
+    var input = document.createElement('input');
+    const map = this.googleMap;
+    Object.assign(input, {
+      id: "searchbox",
+      placeholder: "Enter a place",
+      type: "text",
+      ref: this.inputRef,
+    })
+    var searchBox = new window.google.maps.places.SearchBox(input);
+    map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
+
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', () => {
+      searchBox.setBounds(map.getBounds());
+    });
+    return searchBox;
   }
 
   render() {
