@@ -1,7 +1,7 @@
 import React, {Component, createRef} from 'react';
 
 export default class GoogleMap extends Component {
-  googleMapRef = createRef();
+  mapRef = createRef();
   inputRef = createRef();
 
   componentDidMount() {
@@ -18,7 +18,7 @@ export default class GoogleMap extends Component {
   }
 
   createGoogleMap() {
-    return new window.google.maps.Map(this.googleMapRef.current, {
+    return new window.google.maps.Map(this.mapRef.current, {
       center: {
         lat: 59.95,
         lng: 30.33
@@ -60,7 +60,7 @@ export default class GoogleMap extends Component {
     return (
       <div
         id="google-map"
-        ref={this.googleMapRef}
+        ref={this.mapRef}
       />
     )
   }
