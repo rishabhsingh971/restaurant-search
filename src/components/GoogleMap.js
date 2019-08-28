@@ -16,7 +16,7 @@ export default class GoogleMap extends Component {
   }
 
   createGoogleMap() {
-    new window.google.maps.Map(this.googleMapRef.current, {
+    return new window.google.maps.Map(this.googleMapRef.current, {
       center: {
         lat: 59.95,
         lng: 30.33
