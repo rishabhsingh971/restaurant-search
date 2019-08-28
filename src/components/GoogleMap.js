@@ -40,7 +40,7 @@ export default class GoogleMap extends Component {
 
   // Create the search box and link it to the UI element.
   createSearchBox() {
-    var input = document.createElement('input');
+    const input = document.createElement('input');
     Object.assign(input, {
       id: "searchbox",
       placeholder: "Enter a place",
