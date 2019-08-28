@@ -21,8 +21,8 @@ export default class GoogleMap extends Component {
         lat: 59.95,
         lng: 30.33
       },
-      zoom: 11,
-      disableDefaultUI: false,
+      zoom: 13,
+      streetViewControl: false
     })
   }
 
