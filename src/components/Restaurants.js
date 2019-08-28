@@ -11,6 +11,7 @@ export default class Restaurants extends React.Component {
         <tr
           style={{backgroundColor: i % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}}
           onClick={() => this.props.onClick(i)}
+          key={i}
         >
           <td><img className="placeIcon" src={markerIcon} alt="place icon" /></td>
           <td>{restaurant.name}</td>
