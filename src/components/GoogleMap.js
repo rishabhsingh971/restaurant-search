@@ -52,6 +52,7 @@ export default class GoogleMap extends Component {
       ref: this.inputRef,
     });
 
+    this.map.controls[window.google.maps.ControlPosition.TOP_CENTER].push(input);
     // Create the autocomplete object and associate it with the UI input control.
     const searchBox = new window.google.maps.places.Autocomplete(input, {
       bounds: this.map.getBounds(),
