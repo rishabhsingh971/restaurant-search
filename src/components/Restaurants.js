@@ -2,9 +2,9 @@ import React from 'react';
 
 export default class Restaurants extends React.Component {
   render() {
-    const restaurants = this.props.restaurants;
+    let restaurants = this.props.restaurants;
     if (!restaurants) return null;
-    restaurants.maps((restaurant, i) => {
+    restaurants = restaurants.map((restaurant, i) => {
       const markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
       const markerIcon = this.MARKER_PATH + markerLetter + '.png';
       return (
