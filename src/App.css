@@ -5,19 +5,22 @@
   vertical-align: top;
 }
 
-#google-map {
+#google-map-container {
   display: inline-block;
   width: 70%;
+}
+
+#google-map-container #google-map {
   height: 100vh;
   position: relative;
 }
 
-#google-map #searchbox {
+#google-map-container #searchbox {
   position: absolute;
   top: 10px !important;
 }
 
-header {
+.header {
   background-color: rgb(48, 48, 48);
 }
 

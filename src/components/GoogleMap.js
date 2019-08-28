@@ -93,7 +93,7 @@ export default class GoogleMap extends Component {
 
     this.places.nearbySearch(search, (results, status) => {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-        this.props.onResultUpdate(results);
+        this.props.onResultsUpdate(results);
         // this.clearResults();
         console.log(results)
         this.clearMarkers();
@@ -155,7 +155,7 @@ export default class GoogleMap extends Component {
 
   render() {
     return (
-      <div>
+      <div id="google-map-container">
         <div
           id="google-map"
           ref={this.mapRef}
