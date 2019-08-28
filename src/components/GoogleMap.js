@@ -11,10 +11,12 @@ export default class GoogleMap extends Component {
 
     window.document.body.appendChild(googleMapScript);
 
-    googleMapScript.addEventListener('load', () => {
-      this.googleMap = this.createGoogleMap();
-      this.searchBox = this.createSearchBox();
-    })
+    googleMapScript.addEventListener('load', this.initMap);
+  }
+
+  initMap() {
+    this.googleMap = this.createGoogleMap();
+    this.searchBox = this.createSearchBox();
   }
 
   createGoogleMap() {
