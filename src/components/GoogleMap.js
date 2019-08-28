@@ -93,11 +93,9 @@ export default class GoogleMap extends Component {
 
     this.places.nearbySearch(search, (results, status) => {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-        this.props.onResultsUpdate(results);
-        // this.clearResults();
-        console.log(results)
         this.clearMarkers();
         this.createMarkers(results);
+        this.props.onResultsUpdate(results, this.markers);
       }
     });
   }

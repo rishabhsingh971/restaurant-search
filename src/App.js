@@ -4,6 +4,14 @@ import './App.css';
 import GoogleMap from './components/GoogleMap';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      restaurants: null,
+      markers: null,
+    }
+  }
+
   render() {
     return (
       <div className="App">
@@ -13,9 +21,18 @@ class App extends React.Component {
             <span className="name">Restaurant Search</span>
           </header>
         </div>
-        <GoogleMap />
+        <GoogleMap
+          onResultsUpdate={(restaurants, markers) => this.handleRestaurantsUpdate(restaurants, markers)}
+        />
       </div>
     );
+  }
+
+  handleRestaurantsUpdate(restaurants, markers) {
+    this.setState({
+      restaurants,
+      markers,
+    })
   }
 }
 
