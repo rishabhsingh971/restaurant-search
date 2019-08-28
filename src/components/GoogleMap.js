@@ -127,7 +127,7 @@ export default class GoogleMap extends Component {
       // If the user clicks a restaurant marker, show the details of that restaurant
       // in an info window.
       this.markers[i].placeResult = results[i];
-      window.google.maps.event.addListener(this.markers[i], 'click', this.showInfoWindow(this, i));
+      window.google.maps.event.addListener(this.markers[i], 'click', this.showInfoWindow.bind(this, i));
       setTimeout(this.dropMarker(i), i * 100);
     }
   }
