@@ -3,10 +3,12 @@ import React from 'react';
 export default class Restaurants extends React.Component {
   render() {
     let restaurants = this.props.restaurants;
+
+    const MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
     if (!restaurants) return null;
     restaurants = restaurants.map((restaurant, i) => {
       const markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
-      const markerIcon = this.MARKER_PATH + markerLetter + '.png';
+      const markerIcon = MARKER_PATH + markerLetter + '.png';
       return (
         <tr
           style={{backgroundColor: i % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}}
