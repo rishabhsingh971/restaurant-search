@@ -60,7 +60,6 @@ export default class GoogleMap extends Component {
     return (
       <div
         id="google-map"
-        className={this.props.className}
         ref={this.googleMapRef}
       />
     )
