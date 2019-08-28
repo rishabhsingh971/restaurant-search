@@ -26,9 +26,10 @@ export default class GoogleMap extends Component {
     })
   }
 
-  createMarker() {
-    new window.google.maps.Marker({
-      position: {lat: 43.642567, lng: -79.387054},
+  createMarker(place) {
+    if (!this.googleMap || !place) return null;
+    return new window.google.maps.Marker({
+      position: place.geometry.location,
       map: this.googleMap,
     });
   }
