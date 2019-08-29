@@ -2,10 +2,9 @@ import React from 'react';
 
 export default class Info extends React.Component {
   render() {
-    let ratingHtml = '';
     const place = this.props.place;
-    if (!place) return null;
-    if (place.rating) {
+    let ratingHtml = '';
+    if (place && place.rating) {
       // Assign a five-star rating to the restaurant, using a black star ('&#10029;')
       // to indicate the rating the restaurant has earned, and a white star ('&#10025;')
       // for the rating points not achieved.
@@ -21,7 +20,7 @@ export default class Info extends React.Component {
     // to give a short URL for displaying in the info window.
     let fullUrl;
     let website;
-    if (place.website) {
+    if (place && place.website) {
       fullUrl = place.website;
       website = /^https?:\/\/.+?\//.exec(place.website);
       if (website === null) {
@@ -29,9 +28,10 @@ export default class Info extends React.Component {
         fullUrl = website;
       }
     }
+
     return (
-      <div style={{display: 'none'}}>
-        <div id="info-content">
+      <div id="info-content" style={{display: place ? '' : 'None'}}>
+        {place &&
           <table>
             <tbody>
               <tr className="iw_table_row">
@@ -69,7 +69,7 @@ export default class Info extends React.Component {
               </tr>
             </tbody>
           </table>
-        </div>
+        }
       </div>
     )
   }
