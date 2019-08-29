@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Info from './Info';
 import './GoogleMap.css';
 export default class GoogleMap extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
