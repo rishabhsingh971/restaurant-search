@@ -1,9 +1,7 @@
-import React, {Component, createRef} from 'react';
+import React, {Component} from 'react';
 import Info from './Info';
 
 export default class GoogleMap extends Component {
-  mapRef = createRef();
-  inputRef = createRef();
 
   constructor(props) {
     super(props);
@@ -19,7 +17,7 @@ export default class GoogleMap extends Component {
 
     window.document.body.appendChild(googleMapScript);
 
-    googleMapScript.addEventListener('load', () => this.initMap());
+    googleMapScript.addEventListener('load', this.initMap.bind(this));
   }
 
   initMap() {
@@ -53,7 +51,6 @@ export default class GoogleMap extends Component {
       id: "searchbox",
       placeholder: "Enter a place",
       type: "text",
-      ref: this.inputRef,
     });
 
     this.map.controls[window.google.maps.ControlPosition.TOP_CENTER].push(input);
@@ -157,7 +154,6 @@ export default class GoogleMap extends Component {
       <div id="google-map-container">
         <div
           id="google-map"
-          ref={this.mapRef}
         />
         <Info place={this.state.place} />
       </div>
