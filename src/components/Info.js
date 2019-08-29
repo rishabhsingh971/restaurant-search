@@ -1,21 +1,9 @@
 import React from 'react';
+import Rating from '@material-ui/lab/Rating';
 
 export default class Info extends React.Component {
   render() {
     const place = this.props.place;
-    let ratingHtml = '';
-    if (place && place.rating) {
-      // Assign a five-star rating to the restaurant, using a black star ('&#10029;')
-      // to indicate the rating the restaurant has earned, and a white star ('&#10025;')
-      // for the rating points not achieved.
-      for (let i = 0; i < 5; i++) {
-        if (place.rating < (i + 0.5)) {
-          ratingHtml += '&#10025;';
-        } else {
-          ratingHtml += '&#10029;';
-        }
-      }
-    }
     // The regexp isolates the first part of the URL (domain plus subdomain)
     // to give a short URL for displaying in the info window.
     let fullUrl;
@@ -58,7 +46,13 @@ export default class Info extends React.Component {
                 style={{display: place.rating ? '' : 'None'}}
               >
                 <td className="iw_attribute_name">Rating:</td>
-                <td>{ratingHtml}</td>
+                <td>
+                  <Rating
+                    name="rating"
+                    value={place.rating}
+                    precision={0.1}
+                    readOnly
+                  /></td>
               </tr>
               <tr
                 className="iw_table_row"
