@@ -80,7 +80,7 @@ export default class GoogleMap extends Component {
     }
   }
 
-  // Search for restaurants in the selected city, within the viewport of the this.map.
+  // Search for restaurants in the selected place, within the viewport of the this.map.
   search() {
     var search = {
       bounds: this.map.getBounds(),
