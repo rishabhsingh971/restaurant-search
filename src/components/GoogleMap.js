@@ -145,10 +145,10 @@ export default class GoogleMap extends Component {
         if (status !== window.google.maps.places.PlacesServiceStatus.OK) {
           return;
         }
-        this.infoWindow.open(this.map, marker);
         this.setState({
           place,
         })
+        this.infoWindow.open(this.map, marker);
       });
   }
 
