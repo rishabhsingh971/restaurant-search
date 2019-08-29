@@ -16,8 +16,13 @@
 }
 
 #google-map-container #searchbox {
-  position: absolute;
   top: 10px !important;
+  width: 336px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: 18px;
+  font-size: 14px;
 }
 
 .header {
