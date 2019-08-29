@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import Info from './Info';
-import './GoogleMap.css';
+import SearchBox from './SearchBox';
+
 export default class GoogleMap extends Component {
   constructor(props) {
     super(props);
+    this.searchBoxRef = React.createRef();
     this.state = {
       place: null,
     };
@@ -45,14 +47,10 @@ export default class GoogleMap extends Component {
 
   // Create the search box and link it to the UI element.
   createSearchBox() {
-    const input = document.createElement('input');
-    Object.assign(input, {
-      id: "searchbox",
-      placeholder: "Enter a place",
-      type: "text",
-    });
+    const searchBoxNode = this.searchBoxRef.current;
+    const input = searchBoxNode.childNodes[1];
 
-    this.map.controls[window.google.maps.ControlPosition.TOP_CENTER].push(input);
+    this.map.controls[window.google.maps.ControlPosition.TOP_CENTER].push(searchBoxNode);
     // Create the autocomplete object and associate it with the UI input control.
     const searchBox = new window.google.maps.places.Autocomplete(input, {
       bounds: this.map.getBounds(),
@@ -155,6 +153,7 @@ export default class GoogleMap extends Component {
           id="google-map"
           style={{height: '100vh'}}
         />
+        <SearchBox ref={this.searchBoxRef} />
         <Info place={this.state.place} />
       </div>
     )
