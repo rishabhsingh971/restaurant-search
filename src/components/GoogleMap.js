@@ -129,6 +129,7 @@ export default class GoogleMap extends Component {
       setTimeout(this.dropMarker(i), i * 100);
     }
   }
+
   dropMarker(i) {
     return () => {
       this.markers && this.markers[i].setMap(this.map);
