@@ -11,6 +11,9 @@ class App extends React.Component {
       restaurants: null,
       markers: null,
     }
+
+    this.handleRestaurantClick = this.handleRestaurantClick.bind(this);
+    this.handleRestaurantsUpdate = this.handleRestaurantsUpdate.bind(this);
   }
 
   render() {
@@ -23,11 +26,11 @@ class App extends React.Component {
           </header>
           <Restaurants
             restaurants={this.state.restaurants}
-            onClick={(index) => this.handleRestaurantClick(index)}
+            onClick={this.handleRestaurantClick}
           />
         </div>
         <GoogleMap
-          onResultsUpdate={(restaurants, markers) => this.handleRestaurantsUpdate(restaurants, markers)}
+          onResultsUpdate={this.handleRestaurantsUpdate}
         />
       </div>
     );
