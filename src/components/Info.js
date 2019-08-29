@@ -36,7 +36,7 @@ export default class Info extends React.Component {
             <tbody>
               <tr className="iw_table_row">
                 <td className="iw_table_icon">
-                  <img className="hotelIcon" src={place.icon} alt="hotel icon" />
+                  <img className="hotelIcon" src={place.icon} style={{width: '36px'}} alt="hotel icon" />
                 </td>
                 <td>
                   <b><a href={place.url}>{place.name}</a></b>
