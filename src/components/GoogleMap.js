@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Info from './Info';
-
+import './GoogleMap.css';
 export default class GoogleMap extends Component {
 
   constructor(props) {
@@ -154,6 +154,7 @@ export default class GoogleMap extends Component {
       <div id="google-map-container">
         <div
           id="google-map"
+          style={{height: '100vh'}}
         />
         <Info place={this.state.place} />
       </div>
