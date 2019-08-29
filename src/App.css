@@ -1,18 +1,5 @@
-.sidebar {
-  display: inline-block;
-  width: 30%;
-  height: 100vh;
-  vertical-align: top;
-}
-
-#google-map-container {
-  display: inline-block;
-  width: 70%;
-}
-
 #google-map-container #google-map {
   height: 100vh;
-  position: relative;
 }
 
 #google-map-container #searchbox {
@@ -31,12 +18,11 @@
 
 .logo {
   height: 50px;
-  vertical-align: middle;
   padding: 15px 0;
 }
 
 .name {
   font-size: 24px;
   color: white;
-  vertical-align: middle;
+  align-self: center
 }

@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import GoogleMap from './components/GoogleMap';
 import Restaurants from './components/Restaurants';
+import {Grid} from '@material-ui/core';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,21 +19,23 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <div className="sidebar">
-          <header className="header">
-            <img src={logo} className="logo" alt="logo" />
-            <span className="name">Restaurant Search</span>
-          </header>
+      <Grid container spacing={0}>
+        <Grid item xs={3}>
+          <Grid container className="header">
+            <img className="logo" xs={3} src={logo} alt="logo" />
+            <span className="name" xs={9}>Restaurant Search</span>
+          </Grid>
           <Restaurants
             restaurants={this.state.restaurants}
             onClick={this.handleRestaurantClick}
           />
-        </div>
-        <GoogleMap
-          onResultsUpdate={this.handleRestaurantsUpdate}
-        />
-      </div>
+        </Grid>
+        <Grid item xs={9}>
+          <GoogleMap
+            onResultsUpdate={this.handleRestaurantsUpdate}
+          />
+        </Grid>
+      </Grid>
     );
   }
 
