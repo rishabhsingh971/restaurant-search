@@ -111,14 +111,16 @@ function Restaurant({restaurant, index}) {
 export default class Restaurants extends React.Component {
   render() {
     let restaurants = this.props.restaurants;
+
     if (!restaurants) return null;
-    restaurants = restaurants.map((restaurant, i) =>  (
-        <Restaurant key={restaurant.id} restaurant={restaurant}  index={i}/>
-      )
-    )
+
+    restaurants = restaurants.map((restaurant, i) => (
+      <Restaurant key={restaurant.id} restaurant={restaurant} index={i} />
+    ));
+
     return (
       <List style={{maxHeight: '100%', overflowY: 'auto'}}>
-          {restaurants}
+        {restaurants}
       </List>
     )
   }
