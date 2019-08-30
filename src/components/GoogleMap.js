@@ -1,6 +1,16 @@
 import React from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 import Info from './Info';
 import SearchBox from './SearchBox';
+
+const useStyles = makeStyles(theme => ({
+  mapContainer: {
+    position: 'relative',
+  },
+  map: {
+    height: '100vh',
+  },
+}));
 
 export default class GoogleMap extends React.Component {
   constructor(props) {
@@ -146,15 +156,16 @@ export default class GoogleMap extends React.Component {
   }
 
   render() {
+    const classes = useStyles();
     return (
-      <div id="google-map-container" style={{position: 'relative'}}>
+      <div id="google-map-container" className={classes.mapContainer}>
         <SearchBox
           ref={this.searchBoxRef}
           placeholder="City or Restaurant name"
         />
         <div
           id="google-map"
-          style={{height: '100vh'}}
+          className={classes.map}
         />
         <Info place={this.state.place} />
       </div>
