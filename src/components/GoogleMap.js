@@ -147,7 +147,7 @@ export default class GoogleMap extends Component {
 
   render() {
     return (
-      <div id="google-map-container">
+      <div id="google-map-container" style={{position: 'relative'}}>
         <SearchBox
           ref={this.searchBoxRef}
           placeholder="City or Restaurant name"
