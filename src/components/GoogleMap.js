@@ -95,8 +95,6 @@ class GoogleMap extends React.Component {
       this.map.panTo(place.geometry.location);
       this.map.setZoom(15);
       this.search();
-    } else {
-      document.getElementById('searchbox').placeholder = 'Enter a city';
     }
   }
 
