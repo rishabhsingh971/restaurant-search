@@ -19,8 +19,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <Grid container spacing={0}>
-        <Grid item xs={3}>
+      <Grid container spacing={0} style={{height: '100vh'}}>
+        <Grid item xs={3} style={{maxHeight: '100%', display: 'flex', flexDirection: 'column'}}>
           <Grid container className="header">
             <img className="logo" xs={3} src={logo} alt="logo" />
             <span className="name" xs={9}>Restaurant Search</span>
