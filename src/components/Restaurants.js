@@ -9,11 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import Rating from '@material-ui/lab/Rating';
 
 const useStyles = makeStyles(theme => ({
-  // root: {
-  //   width: '100%',
-  //   maxWidth: 360,
-  //   backgroundColor: theme.palette.background.paper,
-  // },
   card: {
     display: 'flex',
     width: '100%',
