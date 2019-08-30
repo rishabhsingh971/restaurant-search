@@ -34,7 +34,7 @@ class GoogleMap extends React.Component {
     };
 
     this.initMap = this.initMap.bind(this);
-    this.onPlaceChanged = this.onPlaceChanged.bind(this);
+    this.handlePlaceChange = this.handlePlaceChange.bind(this);
   }
 
   componentDidMount() {
@@ -86,13 +86,13 @@ class GoogleMap extends React.Component {
       searchBox.setBounds(this.map.getBounds());
     });
 
-    searchBox.addListener('place_changed', this.onPlaceChanged);
+    searchBox.addListener('place_changed', this.handlePlaceChange);
     return searchBox;
   }
 
   // When the user selects a place, get the place details for the place and
   // zoom the map in on the place.
-  onPlaceChanged() {
+  handlePlaceChange() {
     var place = this.searchBox.getPlace();
     if (place.geometry) {
       this.map.panTo(place.geometry.location);
