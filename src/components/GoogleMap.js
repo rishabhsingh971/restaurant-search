@@ -47,10 +47,9 @@ export default class GoogleMap extends Component {
 
   // Create the search box and link it to the UI element.
   createSearchBox() {
-    const searchBoxNode = this.searchBoxRef.current;
-    const input = searchBoxNode.childNodes[1];
+    const searchBoxNode = this.searchBoxRef.current;;
+    const input = searchBoxNode.childNodes[0];
 
-    this.map.controls[window.google.maps.ControlPosition.TOP_CENTER].push(searchBoxNode);
     // Create the autocomplete object and associate it with the UI input control.
     const searchBox = new window.google.maps.places.Autocomplete(input, {
       bounds: this.map.getBounds(),
@@ -149,13 +148,13 @@ export default class GoogleMap extends Component {
   render() {
     return (
       <div id="google-map-container">
-        <div
-          id="google-map"
-          style={{height: '100vh'}}
-        />
         <SearchBox
           ref={this.searchBoxRef}
           placeholder="City or Restaurant name"
+        />
+        <div
+          id="google-map"
+          style={{height: '100vh'}}
         />
         <Info place={this.state.place} />
       </div>
