@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Info from './Info';
 import SearchBox from './SearchBox';
 
-export default class GoogleMap extends Component {
+export default class GoogleMap extends React.Component {
   constructor(props) {
     super(props);
     this.searchBoxRef = React.createRef();
