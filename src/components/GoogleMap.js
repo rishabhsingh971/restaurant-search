@@ -1,18 +1,19 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Info from './Info';
 import SearchBox from './SearchBox';
+import PropTypes from 'prop-types';
 
-const useStyles = makeStyles(theme => ({
+const styles = {
   mapContainer: {
     position: 'relative',
   },
   map: {
     height: '100vh',
   },
-}));
+};
 
-export default class GoogleMap extends React.Component {
+class GoogleMap extends React.Component {
   constructor(props) {
     super(props);
     this.searchBoxRef = React.createRef();
@@ -156,7 +157,7 @@ export default class GoogleMap extends React.Component {
   }
 
   render() {
-    const classes = useStyles();
+    const classes = this.props.classes;
     return (
       <div id="google-map-container" className={classes.mapContainer}>
         <SearchBox
@@ -172,3 +173,9 @@ export default class GoogleMap extends React.Component {
     )
   }
 }
+
+GoogleMap.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(GoogleMap);
