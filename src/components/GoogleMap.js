@@ -32,6 +32,9 @@ class GoogleMap extends React.Component {
     this.state = {
       place: null,
     };
+
+    this.initMap = this.initMap.bind(this);
+    this.onPlaceChanged = this.onPlaceChanged.bind(this);
   }
 
   componentDidMount() {
@@ -41,7 +44,7 @@ class GoogleMap extends React.Component {
 
     window.document.body.appendChild(googleMapScript);
 
-    googleMapScript.addEventListener('load', this.initMap.bind(this));
+    googleMapScript.addEventListener('load', this.initMap);
   }
 
   initMap() {
@@ -83,7 +86,7 @@ class GoogleMap extends React.Component {
       searchBox.setBounds(this.map.getBounds());
     });
 
-    searchBox.addListener('place_changed', () => this.onPlaceChanged());
+    searchBox.addListener('place_changed', this.onPlaceChanged);
     return searchBox;
   }
 
