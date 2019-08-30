@@ -3,6 +3,8 @@ import {withStyles} from '@material-ui/core/styles';
 import Info from './Info';
 import SearchBox from './SearchBox';
 import PropTypes from 'prop-types';
+import Fab from '@material-ui/core/Fab';
+import SearchIcon from '@material-ui/icons/Search';
 
 const styles = {
   mapContainer: {
@@ -11,6 +13,16 @@ const styles = {
   map: {
     height: '100vh',
   },
+  fab: {
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    right: 0,
+    margin: 'auto',
+  },
+  searchIcon: {
+    marginRight: 4
+  }
 };
 
 class GoogleMap extends React.Component {
@@ -169,6 +181,16 @@ class GoogleMap extends React.Component {
           className={classes.map}
         />
         <Info place={this.state.place} />
+        <Fab
+          color="primary"
+          size="medium"
+          variant="extended"
+          aria-label="search"
+          className={classes.fab}
+        >
+          <SearchIcon className={classes.searchIcon} />
+          Search this area
+        </Fab>
       </div>
     )
   }
