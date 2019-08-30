@@ -13,6 +13,7 @@ const SearchBox = React.forwardRef((props, ref) => (
         }
         ref={ref}
         type="search"
+        placeholder={props.placeholder}
     />
     // <TextField
     //     id="filled-simple-start-adornment"

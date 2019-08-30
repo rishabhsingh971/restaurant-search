@@ -153,7 +153,10 @@ export default class GoogleMap extends Component {
           id="google-map"
           style={{height: '100vh'}}
         />
-        <SearchBox ref={this.searchBoxRef} />
+        <SearchBox
+          ref={this.searchBoxRef}
+          placeholder="City or Restaurant name"
+        />
         <Info place={this.state.place} />
       </div>
     )
