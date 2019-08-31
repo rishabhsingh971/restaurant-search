@@ -30,6 +30,7 @@ const useStyles = makeStyles(theme => ({
   cover: {
     width: '100px',
     flexShrink: 0,
+    padding: 6,
   },
   controls: {
     display: 'flex',
