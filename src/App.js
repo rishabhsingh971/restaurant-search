@@ -14,6 +14,7 @@ class App extends React.Component {
     }
 
     this.handleRestaurantClick = this.handleRestaurantClick.bind(this);
+    this.handleRestaurantHover = this.handleRestaurantHover.bind(this);
     this.handleRestaurantsUpdate = this.handleRestaurantsUpdate.bind(this);
   }
 
@@ -28,6 +29,8 @@ class App extends React.Component {
           <Restaurants
             restaurants={this.state.restaurants}
             onClick={this.handleRestaurantClick}
+            onMouseEnter={(i) => this.handleRestaurantHover(i, true)}
+            onMouseLeave={(i) => this.handleRestaurantHover(i, false)}
           />
         </Grid>
         <Grid item xs={9}>
@@ -41,7 +44,13 @@ class App extends React.Component {
   }
 
   handleRestaurantClick(index) {
+    if (!window.google) return;
     window.google.maps.event.trigger(this.state.markers[index], 'click');
+  }
+
+  handleRestaurantHover(index, enter = true) {
+    if (!window.google) return;
+    window.google.maps.event.trigger(this.state.markers[index], enter ? 'focus' : 'blur');
   }
 
   handleRestaurantsUpdate(restaurants, markers) {

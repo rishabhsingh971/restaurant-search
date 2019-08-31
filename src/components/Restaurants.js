@@ -54,8 +54,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Restaurants({restaurants, onClick, onMouseOver}) {
+export default function Restaurants({restaurants, onClick, onMouseEnter, onMouseLeave}) {
   const classes = useStyles();
+  const [selectedIndex, setSelectedIndex] = React.useState(null);
 
   if (!restaurants) return null;
 
@@ -64,7 +65,17 @@ export default function Restaurants({restaurants, onClick, onMouseOver}) {
     const avatar = (photos && photos[0] && photos[0].getUrl && photos[0].getUrl()) || icon;
 
     return (
-      <ListItem key={id} alignItems="flex-start" onClick={onClick} onMouseOver={onMouseOver}>
+      <ListItem
+        key={id}
+        alignItems="flex-start"
+        onClick={() => {
+          setSelectedIndex(i);
+          onClick(i);
+        }}
+        onMouseEnter={() => onMouseEnter(i)}
+        onMouseLeave={() => onMouseLeave(i)}
+        selected={selectedIndex === i}
+      >
         <Card className={classes.card}>
           <CardMedia
             className={classes.cover}
