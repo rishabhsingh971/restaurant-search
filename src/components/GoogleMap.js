@@ -63,6 +63,15 @@ class GoogleMap extends React.Component {
     this.infoWindow = new window.google.maps.InfoWindow({
       content: document.getElementById('info-content')
     });
+
+    // for dummy result
+    const {dummyResults} = this.props;
+    if (dummyResults) {
+      this.map.panTo(dummyResults[0].geometry.location);
+      this.map.setZoom(15);
+      this.createMarkers(dummyResults);
+      this.props.onResultsUpdate(dummyResults, this.markers);
+    }
   }
 
   createGoogleMap() {
