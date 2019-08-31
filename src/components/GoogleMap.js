@@ -171,7 +171,8 @@ class GoogleMap extends React.Component {
       // If the user clicks a restaurant marker, show the details of that restaurant
       // in an info window.
       this.markers[i].placeResult = results[i];
-      window.google.maps.event.addListener(this.markers[i], 'click', this.showInfoWindow.bind(this, i));
+      window.google.maps.event.addListener(this.markers[i], 'mouseover', this.showInfoWindow.bind(this, i));
+      window.google.maps.event.addListener(this.markers[i], 'mouseout', this.hideInfoWindow.bind(this, i));
       setTimeout(this.dropMarker(i), i * 100);
     }
   }
@@ -195,7 +196,9 @@ class GoogleMap extends React.Component {
           place,
         })
         this.infoWindow.open(this.map, marker);
-      });
+
+  hideInfoWindow() {
+    this.infoWindow.close();
   }
 
   render() {
