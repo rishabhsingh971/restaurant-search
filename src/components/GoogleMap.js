@@ -5,6 +5,9 @@ import SearchBox from './SearchBox';
 import PropTypes from 'prop-types';
 import Fab from '@material-ui/core/Fab';
 import SearchIcon from '@material-ui/icons/Search';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 const styles = {
   mapContainer: {
@@ -31,6 +34,7 @@ class GoogleMap extends React.Component {
     this.searchBoxRef = React.createRef();
     this.state = {
       place: null,
+      status: null,
     };
 
     this.initMap = this.initMap.bind(this);
@@ -210,6 +214,28 @@ class GoogleMap extends React.Component {
           <SearchIcon className={classes.searchIcon} />
           Search this area
         </Fab>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={!!this.state.status}
+          autoHideDuration={3000}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{this.state.status}</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="close"
+              color="primary"
+              onClick={() => this.setState({status: null})}
+            >
+              <CloseIcon />
+            </IconButton>
+          ]}
+        />
       </div>
     )
   }
@@ -227,7 +253,9 @@ class GoogleMap extends React.Component {
   }
 
   setStatus(status) {
-    console.log(status);
+    this.setState({
+      status,
+    });
   }
 
 }
