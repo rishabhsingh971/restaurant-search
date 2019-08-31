@@ -173,8 +173,18 @@ class GoogleMap extends React.Component {
       this.markers[i].placeResult = results[i];
       window.google.maps.event.addListener(this.markers[i], 'mouseover', this.showInfoWindow.bind(this, i));
       window.google.maps.event.addListener(this.markers[i], 'mouseout', this.hideInfoWindow.bind(this, i));
+      window.google.maps.event.addListener(this.markers[i], 'focus', this.startBounce.bind(this, i));
+      window.google.maps.event.addListener(this.markers[i], 'blur', this.stopBounce.bind(this, i));
       setTimeout(this.dropMarker(i), i * 100);
     }
+  }
+
+  startBounce(i) {
+    this.markers[i].setAnimation(window.google.maps.Animation.BOUNCE);
+  }
+
+  stopBounce(i) {
+    this.markers[i].setAnimation(null);
   }
 
   dropMarker(i) {
