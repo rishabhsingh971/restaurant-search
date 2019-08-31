@@ -188,6 +188,7 @@ class GoogleMap extends React.Component {
           variant="extended"
           aria-label="search"
           className={classes.fab}
+          onClick={this.search}
         >
           <SearchIcon className={classes.searchIcon} />
           Search this area
