@@ -3,7 +3,7 @@ A responsive web UI to search for restaurants near a location using React.js and
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
-> `NOTE: To run this project, google api key must be present in your environment, with key as REACT_APP_GOOGLE_API_KEY`
+> NOTE: To run this project, google api key must be present in your [environment](https://create-react-app.dev/docs/adding-custom-environment-variables#adding-temporary-environment-variables-in-your-shell), with key as *REACT_APP_GOOGLE_API_KEY*.
 
 
 In the project directory, you can run:
