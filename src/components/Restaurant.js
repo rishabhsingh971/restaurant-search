@@ -6,13 +6,12 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Rating from '@material-ui/lab/Rating';
 
-
 const useStyles = makeStyles(theme => ({
-  card: {
+  card: ({height}) => ({
     display: 'flex',
     width: '100%',
-    height: 120
-  },
+    height,
+  }),
   details: {
     display: 'flex',
     flexDirection: 'column',
@@ -21,11 +20,11 @@ const useStyles = makeStyles(theme => ({
     flex: '1 0 auto',
     padding: 10,
   },
-  cover: {
-    width: 100,
+  cover: ({height, small}) => ({
+    width: height - 10,
     flexShrink: 0,
-    padding: 6,
-  },
+    padding: small ? 0 : 6,
+  }),
   controls: {
     display: 'flex',
     alignItems: 'center',
@@ -35,10 +34,10 @@ const useStyles = makeStyles(theme => ({
   title: {
     lineHeight: 1,
   },
-  rating: {
-    marginTop: 8,
+  rating: ({small}) => ({
+    marginTop: small ? 4 : 8,
     display: 'inline-flex'
-  },
+  }),
   ratingText: {
     fontSize: 12,
     marginLeft: 6,
@@ -49,8 +48,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Restaurant({restaurant}) {
-  const classes = useStyles();
+export default function Restaurant({restaurant, size}) {
+  const small = (size === 'small');
+  const height = (small ? 90 : 120);
+  const classes = useStyles({small, height});
 
   if (!restaurant) return null;
 
