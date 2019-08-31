@@ -39,6 +39,7 @@ class GoogleMap extends React.Component {
     this.handlePlaceChange = this.handlePlaceChange.bind(this);
     this.handleCurrentLocationSearch = this.handleCurrentLocationSearch.bind(this);
     this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
+    this.search = this.search.bind(this);
   }
 
   componentDidMount() {
