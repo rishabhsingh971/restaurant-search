@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Restaurant({restaurant, index}) {
+export default function Restaurant({restaurant, index, onClick, onMouseOver}) {
   const {id, name, photos, rating, user_ratings_total, icon, vicinity} = restaurant;
 
   const classes = useStyles();
@@ -60,7 +60,7 @@ export default function Restaurant({restaurant, index}) {
   const avatar = (photos && photos[0] && photos[0].getUrl && photos[0].getUrl()) || icon;
 
   return (
-    <ListItem key={id} alignItems="flex-start">
+    <ListItem key={id} alignItems="flex-start" onClick={onClick} onMouseOver={onmouseover}>
       <Card className={classes.card}>
         <CardMedia
           className={classes.cover}

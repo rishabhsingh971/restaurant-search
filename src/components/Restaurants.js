@@ -10,13 +10,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Restaurants({restaurants}) {
+export default function Restaurants({restaurants, onClick, onMouseOver}) {
   const classes = useStyles();
 
   if (!restaurants) return null;
 
   restaurants = restaurants.map((restaurant, i) => (
-    <Restaurant key={restaurant.id} restaurant={restaurant} index={i} />
+    <Restaurant key={restaurant.id} restaurant={restaurant} index={i} onClick={() => onClick(i)} onMouseOver={() => onMouseOver(i)} />
   ));
 
   return (
