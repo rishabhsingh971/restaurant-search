@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   card: {
     display: 'flex',
     width: '100%',
-    height: '120px'
+    height: 120
   },
   details: {
     display: 'flex',
@@ -25,10 +25,10 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flex: '1 0 auto',
-    padding: '10px',
+    padding: 10,
   },
   cover: {
-    width: '100px',
+    width: 100,
     flexShrink: 0,
     padding: 6,
   },
@@ -42,15 +42,15 @@ const useStyles = makeStyles(theme => ({
     lineHeight: 1,
   },
   rating: {
-    marginTop: '8px',
+    marginTop: 8,
     display: 'inline-flex'
   },
   ratingText: {
-    fontSize: '12px',
-    marginLeft: '6px',
+    fontSize: 12,
+    marginLeft: 6,
   },
   address: {
-    fontSize: '13px',
+    fontSize: 13,
     margin: '4px 0px'
   }
 }));
