@@ -194,7 +194,7 @@ class GoogleMap extends React.Component {
       <div id="google-map-container" className={classes.mapContainer}>
         <SearchBox
           ref={this.searchBoxRef}
-          placeholder="City or Restaurant name"
+          placeholder="Search a location"
           onCurrentLocationClick={this.handleCurrentLocationSearch}
         />
         <div
