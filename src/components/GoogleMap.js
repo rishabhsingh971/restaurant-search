@@ -35,6 +35,7 @@ class GoogleMap extends React.Component {
 
     this.initMap = this.initMap.bind(this);
     this.handlePlaceChange = this.handlePlaceChange.bind(this);
+    this.handleCurrentLocationSearch = this.handleCurrentLocationSearch.bind(this);
   }
 
   componentDidMount() {
@@ -92,13 +93,22 @@ class GoogleMap extends React.Component {
 
   // When the user selects a place, get the place details for the place and
   // zoom the map in on the place.
-  handlePlaceChange() {
-    var place = this.searchBox.getPlace();
-    if (place.geometry) {
-      this.map.panTo(place.geometry.location);
-      this.map.setZoom(15);
-      this.search();
+  handlePlaceChange(coords) {
+    if (coords) {
+      this.map.panTo({lat: coords.latitude, lng: coords.longitude});
     }
+    else {
+      const place = this.searchBox.getPlace();
+      if (place.geometry) {
+        this.map.panTo(place.geometry.location);
+      }
+      else {
+        this.setStatus('Invalid location')
+        return;
+      }
+    }
+    this.map.setZoom(16);
+    this.search();
   }
 
   // Search for restaurants in the selected place, within the viewport of the this.map.
@@ -113,6 +123,12 @@ class GoogleMap extends React.Component {
         this.clearMarkers();
         this.createMarkers(results);
         this.props.onResultsUpdate(results, this.markers);
+      }
+      else if (status === window.google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+        this.setStatus('No results for given location. Please try another location');
+      }
+      else {
+        this.setStatus(status);
       }
     });
   }
@@ -176,6 +192,7 @@ class GoogleMap extends React.Component {
         <SearchBox
           ref={this.searchBoxRef}
           placeholder="City or Restaurant name"
+          onCurrentLocationClick={this.handleCurrentLocationSearch}
         />
         <div
           id="google-map"
@@ -196,6 +213,23 @@ class GoogleMap extends React.Component {
       </div>
     )
   }
+
+  handleCurrentLocationSearch() {
+    if (!navigator.geolocation) {
+      this.setStatus('Geolocation is not supported by your browser');
+    } else {
+      this.setStatus('Locating…');
+      navigator.geolocation.getCurrentPosition(
+        ({coords}) => this.handlePlaceChange(coords),
+        () => this.setStatus('Unable to retrieve your location'),
+      );
+    }
+  }
+
+  setStatus(status) {
+    console.log(status);
+  }
+
 }
 
 GoogleMap.propTypes = {
