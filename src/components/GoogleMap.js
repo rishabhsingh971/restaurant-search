@@ -40,6 +40,7 @@ class GoogleMap extends React.Component {
     this.initMap = this.initMap.bind(this);
     this.handlePlaceChange = this.handlePlaceChange.bind(this);
     this.handleCurrentLocationSearch = this.handleCurrentLocationSearch.bind(this);
+    this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
   }
 
   componentDidMount() {
@@ -221,6 +222,7 @@ class GoogleMap extends React.Component {
           }}
           open={!!this.state.status}
           autoHideDuration={3000}
+          onClose={this.handleSnackbarClose}
           ContentProps={{
             'aria-describedby': 'message-id',
           }}
@@ -230,7 +232,7 @@ class GoogleMap extends React.Component {
               key="close"
               aria-label="close"
               color="primary"
-              onClick={() => this.setState({status: null})}
+              onClick={this.handleSnackbarClose}
             >
               <CloseIcon />
             </IconButton>
@@ -258,6 +260,9 @@ class GoogleMap extends React.Component {
     });
   }
 
+  handleSnackbarClose() {
+    this.setState({status: null});
+  }
 }
 
 GoogleMap.propTypes = {
