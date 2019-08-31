@@ -183,19 +183,14 @@ class GoogleMap extends React.Component {
     };
   }
 
-  // Get the place details for a restaurant. Show the information in an info window,
-  // anchored on the marker for the restaurant that the user selected.
+  // Show the information in an info window, anchored on the marker for the restaurant that the user selected.
   showInfoWindow(i) {
     const marker = this.markers[i];
-    this.places.getDetails({placeId: marker.placeResult.place_id},
-      (place, status) => {
-        if (status !== window.google.maps.places.PlacesServiceStatus.OK) {
-          return;
-        }
-        this.setState({
-          place,
-        })
-        this.infoWindow.open(this.map, marker);
+    this.setState({
+      place: marker.placeResult,
+    })
+    this.infoWindow.open(this.map, marker);
+  }
 
   hideInfoWindow() {
     this.infoWindow.close();
