@@ -32,6 +32,7 @@ class App extends React.Component {
         </Grid>
         <Grid item xs={9}>
           <GoogleMap
+            dummyResults={this.state.restaurants}
             onResultsUpdate={this.handleRestaurantsUpdate}
           />
         </Grid>
