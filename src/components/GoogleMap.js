@@ -103,7 +103,7 @@ class GoogleMap extends React.Component {
         this.map.panTo(place.geometry.location);
       }
       else {
-        this.setStatus('Invalid location')
+        this.setStatus('Location not found... please try again')
         return;
       }
     }
@@ -125,7 +125,7 @@ class GoogleMap extends React.Component {
         this.props.onResultsUpdate(results, this.markers);
       }
       else if (status === window.google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-        this.setStatus('No results for given location. Please try another location');
+        this.setStatus('No results for given location... please try another location');
       }
       else {
         this.setStatus(status);
@@ -218,10 +218,10 @@ class GoogleMap extends React.Component {
     if (!navigator.geolocation) {
       this.setStatus('Geolocation is not supported by your browser');
     } else {
-      this.setStatus('Locating…');
+      this.setStatus('Locating...');
       navigator.geolocation.getCurrentPosition(
         ({coords}) => this.handlePlaceChange(coords),
-        () => this.setStatus('Unable to retrieve your location'),
+        () => this.setStatus('Unable to retrieve your location... please try again.'),
       );
     }
   }
