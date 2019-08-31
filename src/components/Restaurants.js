@@ -12,6 +12,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     maxHeight: '100%',
     overflowY: 'auto',
+    backgroundColor: theme.palette.background.paper,
   },
   card: {
     display: 'flex',
