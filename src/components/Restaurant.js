@@ -11,6 +11,10 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     width: '100%',
     height,
+    '&:hover': {
+      border: 'black solid 1px',
+      margin: -1
+    }
   }),
   details: {
     display: 'flex',
