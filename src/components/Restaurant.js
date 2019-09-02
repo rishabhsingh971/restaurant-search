@@ -12,8 +12,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height,
     '&:hover': {
-      border: 'black solid 1px',
-      margin: -1
+      backgroundColor: 'rgb(212, 212, 212)',
     }
   }),
   details: {
