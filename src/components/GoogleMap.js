@@ -115,20 +115,24 @@ class GoogleMap extends React.Component {
   // zoom the map in on the place.
   handlePlaceChange(coords) {
     if (coords) {
-      this.map.panTo(coords);
+      this.setCenter(coords)
     }
     else {
       const place = this.searchBox.getPlace();
       if (place.geometry) {
-        this.map.panTo(place.geometry.location);
+        this.setCenter(place.geometry.location);
       }
       else {
         this.setStatus('Location not found... please try again')
         return;
       }
     }
-    this.map.setZoom(16);
     this.search();
+  }
+
+  setCenter(center) {
+    this.map.panTo(center);
+    this.map.setZoom(16);
   }
 
   // Search for restaurants in the selected place, within the viewport of the this.map.
