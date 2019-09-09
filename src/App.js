@@ -21,7 +21,7 @@ class App extends React.Component {
   render() {
     return (
       <Grid container spacing={0} style={{height: '100vh'}}>
-        <Grid item xs={3} style={{maxHeight: '100%', display: 'flex', flexDirection: 'column'}}>
+        <Grid item xs={12} sm={3} style={{maxHeight: '100%', display: 'flex', flexDirection: 'column'}}>
           <Grid container className="header">
             <img className="logo" xs={3} src={logo} alt="logo" />
             <span className="name" xs={9}>Restaurant Search</span>
@@ -33,7 +33,7 @@ class App extends React.Component {
             onMouseLeave={(i) => this.handleRestaurantHover(i, false)}
           />
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={0} sm={9}>
           <GoogleMap
             dummyResults={this.state.restaurants}
             onResultsUpdate={this.handleRestaurantsUpdate}
