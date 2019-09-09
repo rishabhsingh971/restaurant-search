@@ -63,6 +63,8 @@ class GoogleMap extends React.Component {
     this.searchBox = this.createSearchBox();
 
     this.places = new window.google.maps.places.PlacesService(this.map);
+    this.distance = new window.google.maps.DistanceMatrixService();
+
     // Info window
     this.infoWindow = new window.google.maps.InfoWindow({
       content: document.getElementById('info-content')
@@ -154,6 +156,39 @@ class GoogleMap extends React.Component {
         this.clearMarkers();
         this.createMarkers(results);
         this.props.onResultsUpdate(results, this.markers);
+
+        // find destinations
+        const destinations = results.map(result => {
+            return {
+              lat: result.geometry.location.lat(),
+              lng: result.geometry.location.lng(),
+            }
+        });
+        // set index in each result
+        for (let i = 0; i < results.length; ++i) {
+          results[i].index = i;
+        }
+
+        // get distance matrix
+        this.distance.getDistanceMatrix(
+        {
+          origins: [this.map.getCenter()],
+          destinations,
+          travelMode: 'DRIVING',
+        }, (distanceResponse, status) => {
+          // TODO: check status
+
+          // sort results on the basis of distance
+          results.sort((r1, r2) => {
+            // TODO: error handling
+            const d1 = distanceResponse.rows[0].elements[r1.index].duration.value;
+            const d2 = distanceResponse.rows[0].elements[r2.index].duration.value;
+
+            return d1 - d2;
+          })
+          // update result
+          this.props.onResultsUpdate(results, this.markers)
+        });
       }
       else if (status === window.google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
         this.setStatus('No results for given location... please try another location');
