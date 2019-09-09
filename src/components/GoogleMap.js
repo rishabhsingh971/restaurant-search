@@ -31,7 +31,7 @@ class GoogleMap extends React.Component {
       place: null,
       status: null,
     };
-    this.searchBoxRef = this.props.getSearchBoxRef()
+    this.searchBoxRef = this.props.getSearchBoxRef();
     this.setStatus = this.props.setStatus;
     this.initMap = this.initMap.bind(this);
     this.handlePlaceChange = this.handlePlaceChange.bind(this);
