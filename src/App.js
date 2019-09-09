@@ -44,7 +44,8 @@ class App extends React.Component {
           <Grid container className="header">
             <img className="logo" xs={3} src={logo} alt="logo" />
             <span className="name" xs={9}>Restaurant Search</span>
-
+          </Grid>
+          <Grid container className="searchbox-container">
             <SearchBox
               ref={this.searchBoxRef}
               placeholder="Search a location"
