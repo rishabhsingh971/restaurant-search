@@ -115,7 +115,7 @@ class GoogleMap extends React.Component {
   // zoom the map in on the place.
   handlePlaceChange(coords) {
     if (coords) {
-      this.map.panTo({lat: coords.latitude, lng: coords.longitude});
+      this.map.panTo(coords);
     }
     else {
       const place = this.searchBox.getPlace();

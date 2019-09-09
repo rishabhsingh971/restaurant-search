@@ -32,7 +32,7 @@ class App extends React.Component {
     } else {
       this.setStatus('Locating...');
       navigator.geolocation.getCurrentPosition(
-        ({coords}) => this.setState({center: coords}),
+        ({coords}) => this.setState({center: {lat: coords.latitude, lng: coords.longitude}}),
         () => this.setStatus('Unable to retrieve your location... please try again.'),
       );
     }
