@@ -13,6 +13,7 @@ class App extends React.Component {
     this.state = {
       restaurants: getDummyRestaurants(),
       markers: null,
+      center: null,
       status: null,
     }
 
@@ -31,7 +32,7 @@ class App extends React.Component {
     } else {
       this.setStatus('Locating...');
       navigator.geolocation.getCurrentPosition(
-        ({coords}) => this.setState({center: coords}),
+        ({coords}) => this.setState({center: coords})
         () => this.setStatus('Unable to retrieve your location... please try again.'),
       );
     }

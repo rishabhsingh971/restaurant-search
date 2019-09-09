@@ -32,6 +32,7 @@ class GoogleMap extends React.Component {
       status: null,
     };
     this.searchBoxRef = this.props.getSearchBoxRef();
+    this.center = this.props.center;
     this.setStatus = this.props.setStatus;
     this.initMap = this.initMap.bind(this);
     this.handlePlaceChange = this.handlePlaceChange.bind(this);
@@ -46,6 +47,12 @@ class GoogleMap extends React.Component {
     window.document.body.appendChild(googleMapScript);
 
     googleMapScript.addEventListener('load', this.initMap);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.center !== prevProps.center) {
+      this.handlePlaceChange(this.props.center);
+    }
   }
 
   initMap() {
@@ -73,7 +80,7 @@ class GoogleMap extends React.Component {
   createGoogleMap() {
     return new window.google.maps.Map(document.getElementById('google-map'), {
       zoom: 13,
-      center: {lat: 27, lng: 77},
+      center: this.center,
       mapTypeControl: false,
       panControl: true,
       zoomControl: true,
