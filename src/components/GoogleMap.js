@@ -1,7 +1,6 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import Info from './Info';
-import SearchBox from './SearchBox';
 import PropTypes from 'prop-types';
 import Fab from '@material-ui/core/Fab';
 import SearchIcon from '@material-ui/icons/Search';
@@ -29,15 +28,13 @@ const styles = {
 class GoogleMap extends React.Component {
   constructor(props) {
     super(props);
-    this.searchBoxRef = React.createRef();
     this.state = {
       place: null,
       status: null,
     };
-
+    this.searchBoxRef = this.props.getSearchBoxRef()
     this.initMap = this.initMap.bind(this);
     this.handlePlaceChange = this.handlePlaceChange.bind(this);
-    this.handleCurrentLocationSearch = this.handleCurrentLocationSearch.bind(this);
     this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
     this.search = this.search.bind(this);
   }
@@ -99,6 +96,10 @@ class GoogleMap extends React.Component {
     this.map.addListener('bounds_changed', () => {
       searchBox.setBounds(this.map.getBounds());
     });
+
+    this.map.addListener('tilesloaded', () => {
+      this.search();
+    })
 
     searchBox.addListener('place_changed', this.handlePlaceChange);
     return searchBox;
@@ -210,11 +211,6 @@ class GoogleMap extends React.Component {
     const classes = this.props.classes;
     return (
       <div id="google-map-container" className={classes.mapContainer}>
-        <SearchBox
-          ref={this.searchBoxRef}
-          placeholder="Search a location"
-          onCurrentLocationClick={this.handleCurrentLocationSearch}
-        />
         <div
           id="google-map"
           className={classes.map}
@@ -237,18 +233,6 @@ class GoogleMap extends React.Component {
         />
       </div>
     )
-  }
-
-  handleCurrentLocationSearch() {
-    if (!navigator.geolocation) {
-      this.setStatus('Geolocation is not supported by your browser');
-    } else {
-      this.setStatus('Locating...');
-      navigator.geolocation.getCurrentPosition(
-        ({coords}) => this.handlePlaceChange(coords),
-        () => this.setStatus('Unable to retrieve your location... please try again.'),
-      );
-    }
   }
 
   setStatus(status) {

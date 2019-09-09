@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import GoogleMap from './components/GoogleMap';
 import Restaurants from './components/Restaurants';
+import SearchBox from './components/SearchBox';
 import {Grid} from '@material-ui/core';
 
 class App extends React.Component {
@@ -11,11 +12,26 @@ class App extends React.Component {
     this.state = {
       restaurants: getDummyRestaurants(),
       markers: null,
+      center: {lat: 27, lng: 77},
     }
 
+    this.searchBoxRef = React.createRef();
     this.handleRestaurantClick = this.handleRestaurantClick.bind(this);
     this.handleRestaurantHover = this.handleRestaurantHover.bind(this);
     this.handleRestaurantsUpdate = this.handleRestaurantsUpdate.bind(this);
+    this.handleCurrentLocationSearch = this.handleCurrentLocationSearch.bind(this);
+  }
+
+  handleCurrentLocationSearch() {
+    if (!navigator.geolocation) {
+      this.setStatus('Geolocation is not supported by your browser');
+    } else {
+      this.setStatus('Locating...');
+      navigator.geolocation.getCurrentPosition(
+        ({coords}) => this.setState({center: coords}),
+        () => this.setStatus('Unable to retrieve your location... please try again.'),
+      );
+    }
   }
 
   render() {
@@ -25,6 +41,12 @@ class App extends React.Component {
           <Grid container className="header">
             <img className="logo" xs={3} src={logo} alt="logo" />
             <span className="name" xs={9}>Restaurant Search</span>
+
+            <SearchBox
+              ref={this.searchBoxRef}
+              placeholder="Search a location"
+              onCurrentLocationClick={this.handleCurrentLocationSearch}
+            />
           </Grid>
           <Restaurants
             restaurants={this.state.restaurants}
@@ -37,6 +59,8 @@ class App extends React.Component {
           <GoogleMap
             dummyResults={this.state.restaurants}
             onResultsUpdate={this.handleRestaurantsUpdate}
+            center={this.state.center}
+            getSearchBoxRef = {() => this.searchBoxRef}
           />
         </Grid>
       </Grid>
