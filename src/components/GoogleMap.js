@@ -57,6 +57,7 @@ class GoogleMap extends React.Component {
 
   initMap() {
     this.markers = [];
+    this.centerMarker = null;
     this.MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
     this.map = this.createGoogleMap();
     this.searchBox = this.createSearchBox();
@@ -130,6 +131,13 @@ class GoogleMap extends React.Component {
   }
 
   setCenter(center) {
+    if (this.centerMarker) this.centerMarker.setMap(null);
+    this.centerMarker = new window.google.maps.Marker({
+      position: center,
+      animation: window.google.maps.Animation.DROP,
+      map: this.map,
+      title: 'Center',
+    });
     this.map.panTo(center);
     this.map.setZoom(16);
   }
