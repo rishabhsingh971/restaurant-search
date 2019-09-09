@@ -176,16 +176,20 @@ class GoogleMap extends React.Component {
           destinations,
           travelMode: 'DRIVING',
         }, (distanceResponse, status) => {
-          // TODO: check status
+          if (status === 'OK') {
+            // sort results on the basis of distance
+            try {
+              results.sort((r1, r2) => {
+                const d1 = distanceResponse.rows[0].elements[r1.index].duration.value;
+                const d2 = distanceResponse.rows[0].elements[r2.index].duration.value;
 
-          // sort results on the basis of distance
-          results.sort((r1, r2) => {
-            // TODO: error handling
-            const d1 = distanceResponse.rows[0].elements[r1.index].duration.value;
-            const d2 = distanceResponse.rows[0].elements[r2.index].duration.value;
-
-            return d1 - d2;
-          })
+                return d1 - d2;
+              });
+            }
+            catch(err) {
+              console.log(err);
+            }
+          }
           // update result
           this.props.onResultsUpdate(results, this.markers)
         });
