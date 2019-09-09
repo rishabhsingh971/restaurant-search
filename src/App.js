@@ -13,7 +13,7 @@ class App extends React.Component {
     this.state = {
       restaurants: getDummyRestaurants(),
       markers: null,
-      center: {lat: 27, lng: 77},
+      status: null,
     }
 
     this.searchBoxRef = React.createRef();
