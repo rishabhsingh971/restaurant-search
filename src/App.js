@@ -4,6 +4,7 @@ import './App.css';
 import GoogleMap from './components/GoogleMap';
 import Restaurants from './components/Restaurants';
 import SearchBox from './components/SearchBox';
+import Snackbar from './components/Snackbar';
 import {Grid} from '@material-ui/core';
 
 class App extends React.Component {
@@ -20,6 +21,8 @@ class App extends React.Component {
     this.handleRestaurantHover = this.handleRestaurantHover.bind(this);
     this.handleRestaurantsUpdate = this.handleRestaurantsUpdate.bind(this);
     this.handleCurrentLocationSearch = this.handleCurrentLocationSearch.bind(this);
+    this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
+    this.setStatus = this.setStatus.bind(this);
   }
 
   handleCurrentLocationSearch() {
@@ -54,6 +57,10 @@ class App extends React.Component {
             onMouseEnter={(i) => this.handleRestaurantHover(i, true)}
             onMouseLeave={(i) => this.handleRestaurantHover(i, false)}
           />
+          <Snackbar
+            message={this.state.status}
+            onClose={this.handleSnackbarClose}
+          />
         </Grid>
         <Grid item xs={0} sm={9}>
           <GoogleMap
@@ -61,6 +68,7 @@ class App extends React.Component {
             onResultsUpdate={this.handleRestaurantsUpdate}
             center={this.state.center}
             getSearchBoxRef = {() => this.searchBoxRef}
+            setStatus= {this.setStatus}
           />
         </Grid>
       </Grid>
@@ -82,6 +90,14 @@ class App extends React.Component {
       restaurants,
       markers,
     })
+  }
+
+  setStatus(status) {
+    this.setState({status});
+  }
+
+  handleSnackbarClose() {
+    this.setState({status: null});
   }
 }
 

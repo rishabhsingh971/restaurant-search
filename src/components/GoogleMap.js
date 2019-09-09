@@ -4,7 +4,6 @@ import Info from './Info';
 import PropTypes from 'prop-types';
 import Fab from '@material-ui/core/Fab';
 import SearchIcon from '@material-ui/icons/Search';
-import Snackbar from './Snackbar';
 
 const styles = {
   mapContainer: {
@@ -33,9 +32,9 @@ class GoogleMap extends React.Component {
       status: null,
     };
     this.searchBoxRef = this.props.getSearchBoxRef()
+    this.setStatus = this.props.setStatus;
     this.initMap = this.initMap.bind(this);
     this.handlePlaceChange = this.handlePlaceChange.bind(this);
-    this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
     this.search = this.search.bind(this);
   }
 
@@ -227,20 +226,8 @@ class GoogleMap extends React.Component {
           <SearchIcon className={classes.searchIcon} />
           Search this area
         </Fab>
-        <Snackbar
-          message={this.state.status}
-          onClose={this.handleSnackbarClose}
-        />
       </div>
     )
-  }
-
-  setStatus(status) {
-    this.setState({status});
-  }
-
-  handleSnackbarClose() {
-    this.setState({status: null});
   }
 }
 
