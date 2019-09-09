@@ -51,7 +51,7 @@ class GoogleMap extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.center !== prevProps.center) {
+    if (this.map && this.props.center !== prevProps.center ) {
       this.handlePlaceChange(this.props.center);
     }
   }
