@@ -1,11 +1,9 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import Info from './Info';
-import SearchBox from './SearchBox';
 import PropTypes from 'prop-types';
 import Fab from '@material-ui/core/Fab';
 import SearchIcon from '@material-ui/icons/Search';
-import Snackbar from './Snackbar';
 
 const styles = {
   mapContainer: {
@@ -29,16 +27,16 @@ const styles = {
 class GoogleMap extends React.Component {
   constructor(props) {
     super(props);
-    this.searchBoxRef = React.createRef();
     this.state = {
       place: null,
       status: null,
     };
+    this.searchBoxRef = this.props.getSearchBoxRef();
+    this.center = this.props.center;
+    this.setStatus = this.props.setStatus;
 
     this.initMap = this.initMap.bind(this);
     this.handlePlaceChange = this.handlePlaceChange.bind(this);
-    this.handleCurrentLocationSearch = this.handleCurrentLocationSearch.bind(this);
-    this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
     this.search = this.search.bind(this);
   }
 
@@ -52,13 +50,22 @@ class GoogleMap extends React.Component {
     googleMapScript.addEventListener('load', this.initMap);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.map && this.props.center !== prevProps.center ) {
+      this.handlePlaceChange(this.props.center);
+    }
+  }
+
   initMap() {
     this.markers = [];
+    this.centerMarker = null;
     this.MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
     this.map = this.createGoogleMap();
     this.searchBox = this.createSearchBox();
 
     this.places = new window.google.maps.places.PlacesService(this.map);
+    this.distance = new window.google.maps.DistanceMatrixService();
+
     // Info window
     this.infoWindow = new window.google.maps.InfoWindow({
       content: document.getElementById('info-content')
@@ -67,8 +74,7 @@ class GoogleMap extends React.Component {
     // for dummy result
     const {dummyResults} = this.props;
     if (dummyResults) {
-      this.map.panTo(dummyResults[0].geometry.location);
-      this.map.setZoom(15);
+      this.setCenter(dummyResults[0].geometry.location);
       this.createMarkers(dummyResults);
       this.props.onResultsUpdate(dummyResults, this.markers);
     }
@@ -77,7 +83,7 @@ class GoogleMap extends React.Component {
   createGoogleMap() {
     return new window.google.maps.Map(document.getElementById('google-map'), {
       zoom: 13,
-      center: {lat: 27, lng: 77},
+      center: this.center,
       mapTypeControl: false,
       panControl: true,
       zoomControl: true,
@@ -100,6 +106,10 @@ class GoogleMap extends React.Component {
       searchBox.setBounds(this.map.getBounds());
     });
 
+    this.map.addListener('tilesloaded', () => {
+      this.search();
+    })
+
     searchBox.addListener('place_changed', this.handlePlaceChange);
     return searchBox;
   }
@@ -108,20 +118,31 @@ class GoogleMap extends React.Component {
   // zoom the map in on the place.
   handlePlaceChange(coords) {
     if (coords) {
-      this.map.panTo({lat: coords.latitude, lng: coords.longitude});
+      this.setCenter(coords)
     }
     else {
       const place = this.searchBox.getPlace();
       if (place.geometry) {
-        this.map.panTo(place.geometry.location);
+        this.setCenter(place.geometry.location);
       }
       else {
         this.setStatus('Location not found... please try again')
         return;
       }
     }
-    this.map.setZoom(16);
     this.search();
+  }
+
+  setCenter(center) {
+    if (this.centerMarker) this.centerMarker.setMap(null);
+    this.centerMarker = new window.google.maps.Marker({
+      position: center,
+      animation: window.google.maps.Animation.DROP,
+      map: this.map,
+      title: 'Center',
+    });
+    this.map.panTo(center);
+    this.map.setZoom(16);
   }
 
   // Search for restaurants in the selected place, within the viewport of the this.map.
@@ -136,6 +157,43 @@ class GoogleMap extends React.Component {
         this.clearMarkers();
         this.createMarkers(results);
         this.props.onResultsUpdate(results, this.markers);
+
+        // find destinations
+        const destinations = results.map(result => {
+            return {
+              lat: result.geometry.location.lat(),
+              lng: result.geometry.location.lng(),
+            }
+        });
+        // set index in each result
+        for (let i = 0; i < results.length; ++i) {
+          results[i].index = i;
+        }
+
+        // get distance matrix
+        this.distance.getDistanceMatrix(
+        {
+          origins: [this.map.getCenter()],
+          destinations,
+          travelMode: 'DRIVING',
+        }, (distanceResponse, status) => {
+          if (status === 'OK') {
+            // sort results on the basis of distance
+            try {
+              results.sort((r1, r2) => {
+                const d1 = distanceResponse.rows[0].elements[r1.index].duration.value;
+                const d2 = distanceResponse.rows[0].elements[r2.index].duration.value;
+
+                return d1 - d2;
+              });
+            }
+            catch(err) {
+              console.log(err);
+            }
+          }
+          // update result
+          this.props.onResultsUpdate(results, this.markers)
+        });
       }
       else if (status === window.google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
         this.setStatus('No results for given location... please try another location');
@@ -210,11 +268,6 @@ class GoogleMap extends React.Component {
     const classes = this.props.classes;
     return (
       <div id="google-map-container" className={classes.mapContainer}>
-        <SearchBox
-          ref={this.searchBoxRef}
-          placeholder="Search a location"
-          onCurrentLocationClick={this.handleCurrentLocationSearch}
-        />
         <div
           id="google-map"
           className={classes.map}
@@ -231,32 +284,8 @@ class GoogleMap extends React.Component {
           <SearchIcon className={classes.searchIcon} />
           Search this area
         </Fab>
-        <Snackbar
-          message={this.state.status}
-          onClose={this.handleSnackbarClose}
-        />
       </div>
     )
-  }
-
-  handleCurrentLocationSearch() {
-    if (!navigator.geolocation) {
-      this.setStatus('Geolocation is not supported by your browser');
-    } else {
-      this.setStatus('Locating...');
-      navigator.geolocation.getCurrentPosition(
-        ({coords}) => this.handlePlaceChange(coords),
-        () => this.setStatus('Unable to retrieve your location... please try again.'),
-      );
-    }
-  }
-
-  setStatus(status) {
-    this.setState({status});
-  }
-
-  handleSnackbarClose() {
-    this.setState({status: null});
   }
 }
 

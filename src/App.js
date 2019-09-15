@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import GoogleMap from './components/GoogleMap';
 import Restaurants from './components/Restaurants';
+import SearchBox from './components/SearchBox';
+import Snackbar from './components/Snackbar';
 import {Grid} from '@material-ui/core';
 
 class App extends React.Component {
@@ -11,20 +13,45 @@ class App extends React.Component {
     this.state = {
       restaurants: getDummyRestaurants(),
       markers: null,
+      center: null,
+      status: null,
     }
 
+    this.searchBoxRef = React.createRef();
     this.handleRestaurantClick = this.handleRestaurantClick.bind(this);
     this.handleRestaurantHover = this.handleRestaurantHover.bind(this);
     this.handleRestaurantsUpdate = this.handleRestaurantsUpdate.bind(this);
+    this.handleCurrentLocationSearch = this.handleCurrentLocationSearch.bind(this);
+    this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
+    this.setStatus = this.setStatus.bind(this);
+  }
+
+  handleCurrentLocationSearch() {
+    if (!navigator.geolocation) {
+      this.setStatus('Geolocation is not supported by your browser');
+    } else {
+      this.setStatus('Locating...');
+      navigator.geolocation.getCurrentPosition(
+        ({coords}) => this.setState({center: {lat: coords.latitude, lng: coords.longitude}}),
+        () => this.setStatus('Unable to retrieve your location... please try again.'),
+      );
+    }
   }
 
   render() {
     return (
       <Grid container spacing={0} style={{height: '100vh'}}>
-        <Grid item xs={3} style={{maxHeight: '100%', display: 'flex', flexDirection: 'column'}}>
+        <Grid item sm={12} md={3} style={{maxHeight: '100%', display: 'flex', flexDirection: 'column'}}>
           <Grid container className="header">
             <img className="logo" xs={3} src={logo} alt="logo" />
             <span className="name" xs={9}>Restaurant Search</span>
+          </Grid>
+          <Grid container className="searchbox-container">
+            <SearchBox
+              ref={this.searchBoxRef}
+              placeholder="Search a location"
+              onCurrentLocationClick={this.handleCurrentLocationSearch}
+            />
           </Grid>
           <Restaurants
             restaurants={this.state.restaurants}
@@ -32,11 +59,18 @@ class App extends React.Component {
             onMouseEnter={(i) => this.handleRestaurantHover(i, true)}
             onMouseLeave={(i) => this.handleRestaurantHover(i, false)}
           />
+          <Snackbar
+            message={this.state.status}
+            onClose={this.handleSnackbarClose}
+          />
         </Grid>
-        <Grid item xs={9}>
+        <Grid item sm={false} md={9}>
           <GoogleMap
             dummyResults={this.state.restaurants}
             onResultsUpdate={this.handleRestaurantsUpdate}
+            center={this.state.center}
+            getSearchBoxRef = {() => this.searchBoxRef}
+            setStatus= {this.setStatus}
           />
         </Grid>
       </Grid>
@@ -58,6 +92,14 @@ class App extends React.Component {
       restaurants,
       markers,
     })
+  }
+
+  setStatus(status) {
+    this.setState({status});
+  }
+
+  handleSnackbarClose() {
+    this.setState({status: null});
   }
 }
 
